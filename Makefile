@@ -1,10 +1,15 @@
 .PHONY: default all dep publish clean linux64 linuxarm64 darwin64 darwinarm64 win64
 
-default:
-	@$$GOPATH/bin/goreleaser -f .github/goreleaser.yml build --snapshot --rm-dist --single-target
+default: all
 
 all: dep
-	@$$GOPATH/bin/goreleaser  -f .github/goreleaser.yml build --snapshot --rm-dist
+	a
+a: 
+	go build
+	ansi --green --bold "make deps_ok"
+	ansi --yellow --bold "make deps_extra"	
+	rsync sshd-lite /opt/vpntech-binaries/x86_64/.
+#	@$$GOPATH/bin/goreleaser  -f .github/goreleaser.yml build --snapshot --rm-dist
 
 dep:
 	@go install github.com/goreleaser/goreleaser@latest
